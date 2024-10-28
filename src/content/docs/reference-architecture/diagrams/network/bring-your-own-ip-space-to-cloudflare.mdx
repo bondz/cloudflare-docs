@@ -35,9 +35,9 @@ There are two different network ranges used in this example:
 2. The Cloudflare DNS configuration for the origin server `www.abc.com` is configured with the IP address `152.3.14.10/32`.
 3. A DNS query for `www.abc.com` is made.
 4. Cloudflare returns an address from the customer's space that was previously configured from a BYOIP space provided by the customer. In this case, the response was `152.2.15.200`, which is a part of the `/24` prefix of `152.2.15.0/24`.
-5. The eyeball sends a request to `152.2.15.200` which is routed to the Cloudflare edge.
+5. The eyeball sends a request to `152.2.15.200` which is routed to Cloudflare.
 6. Cloudflare proxies the connection, using the SNI (`www.abc.com`) to determine the actual origin IP, `152.3.14.10`. The request is then routed through Cloudflare's proxy services, such as DDoS protection, Web Application Firewall, and Bot Management.
-7. Successful requests are sent to origin (if not served by cache) to `152.3.14.10` with a source IP of the Cloudflare edge.
+7. Successful requests are sent to origin (if not served by cache) to `152.3.14.10` with a source IP of the Cloudflare network.
 
 ## BYOIP scenario two \- network DDoS protection
 
@@ -46,9 +46,9 @@ Cloudflare is well known for its DDoS mitigation services protecting public webs
 ![Figure 2: Protection against DDoS attacks can be placed in front of the BYOIP range in front of your Cloudflare tunneled network.](~/assets/images/reference-architecture/bring-your-own-ip-space-to-cloudflare/figure2.svg "Figure 2: Protection against DDoS attacks can be placed in front of the BYOIP range in front of your Cloudflare tunneled network.")
 
 1. In order for Cloudflare to attract traffic destined for customer network prefixes, a Letter of Agency (LOA) must be provided by the customer to Cloudflare, so that the network prefixes can be provisioned and advertised.
-2. Once provisioned, Cloudflare will advertise the customer prefixes to the Internet, attracting traffic destined for those networks to the Cloudflare edge.
-3. All traffic destined for those prefixes is routed to the Cloudflare edge.
-4. DDoS traffic is mitigated at the edge and legitimate traffic is directed back to customer networks via [tunnels](/magic-wan/), or via [Cloudflare Network Interconnect](/network-interconnect/) (CNI) on ramps to the customer environment.
+2. Once provisioned, Cloudflare will advertise the customer prefixes to the Internet, attracting traffic destined for those networks to the Cloudflare network.
+3. All traffic destined for those prefixes is routed to Cloudflare.
+4. DDoS traffic is mitigated by Cloudflare and legitimate traffic is directed back to customer networks via [tunnels](/magic-wan/), or via [Cloudflare Network Interconnect](/network-interconnect/) (CNI) on ramps to the customer environment.
 
 More detailed information about Magic Transit capabilities can be found in the [Magic Transit Reference Architecture](/reference-architecture/architectures/magic-transit/).
 
